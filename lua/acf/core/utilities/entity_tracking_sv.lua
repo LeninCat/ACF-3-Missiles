@@ -3,43 +3,7 @@ local Clock           = ACF.Utilities.Clock
 local Contraption     = ACF.Contraption
 local Countermeasures = ACF.Classes.Countermeasures
 local NextUpdate      = 0
-local Entities        = {}
 local Ancestors       = {}
-
-local Whitelist  = {
-	-- Garry's Mod entities
-	gmod_wheel                 = true,
-	gmod_hoverball             = true,
-	gmod_thruster              = true,
-	gmod_light                 = true,
-	gmod_emitter               = true,
-	gmod_button                = true,
-	phys_magnet                = true,
-	-- Wiremod entities
-	gmod_wire_cameracontroller = true,
-	gmod_wire_expression2      = true,
-	gmod_wire_egp_hud          = true,
-	gmod_wire_eyepod           = true,
-	gmod_wire_gate             = true,
-	gmod_wire_light            = true,
-	gmod_wire_pod              = true,
-	gmod_wire_thruster         = true,
-	-- Starfall entities
-	starfall_hud               = true,
-	starfall_processor         = true,
-	starfall_screen            = true,
-	-- ACF entities
-	acf_ammo                   = true,
-	acf_computer               = true,
-	acf_engine                 = true,
-	acf_fueltank               = true,
-	acf_gearbox                = true,
-	acf_gun                    = true,
-	acf_rack                   = true,
-	acf_radar                  = true,
-	-- I shouldn't have to explain this
-	player                     = true,
-}
 
 local function GetAncestor(Entity)
 	local Ancestor = Contraption.GetAncestor(Entity)
@@ -75,24 +39,17 @@ local function UpdateValues(Entity)
 	Entity.Velocity = Velocity
 end
 
+-- Maintain ancestors array
 hook.Add("OnEntityCreated", "ACF Entity Tracking", function(Entity)
 	if not IsValid(Entity) then return end
-	if not Whitelist[Entity:GetClass()] then return end
+	if not Entity.IsACFBaseplate then return end
 
-	Entities[Entity] = true
-
-	Entity:CallOnRemove("ACF Entity Tracking", function()
-		Entities[Entity] = nil
-	end)
-end)
-
-hook.Add("PlayerSpawnedVehicle", "ACF Entity Tracking", function(_, Entity)
-	if not IsValid(Entity) then return end
-
-	Entities[Entity] = true
+	Ancestors[Entity] = true
 
 	Entity:CallOnRemove("ACF Entity Tracking", function()
-		Entities[Entity] = nil
+		Ancestors[Entity] = nil
+		Entity.Position = nil
+		Entity.Velocity = nil
 	end)
 end)
 
@@ -103,46 +60,6 @@ hook.Add("ACF_OnTick", "ACF Entity Tracking", function()
 end)
 
 local function GetAncestorEntities()
-	if Clock.CurTime < NextUpdate then return Ancestors end
-
-	local Previous = {}
-	local Checked  = {}
-
-	for K in pairs(Ancestors) do Previous[K] = true end
-
-	for K in pairs(Entities) do
-		local Ancestor = GetAncestor(K)
-
-		if Ancestor and not Checked[Ancestor] then
-			if not Ancestors[Ancestor] then
-				UpdateValues(Ancestor)
-
-				Ancestors[Ancestor] = true
-
-				Ancestor:CallOnRemove("ACF Ancestor Tracking", function()
-					Ancestors[Ancestor] = nil
-				end)
-			end
-
-			Previous[Ancestor] = nil
-			Checked[Ancestor] = true
-		end
-	end
-
-	for K in pairs(Previous) do
-		Ancestors[K] = nil
-
-		K.Position = nil
-		K.Velocity = nil
-
-		-- Weird that this causes errors, but RemoveCallOnRemove dies here now?? - March 11/9/2025
-		if K:GetTable() ~= nil then
-			K:RemoveCallOnRemove("ACF Ancestor Tracking")
-		end
-	end
-
-	NextUpdate = Clock.CurTime + math.Rand(3, 5)
-
 	return Ancestors
 end
 
@@ -152,6 +69,7 @@ function ACF.GetEntitiesInCone(Position, Direction, Degrees, Contraption)
 	for Entity in pairs(GetAncestorEntities()) do
 		if not IsValid(Entity) then continue end
 		if Contraption and Entity:GetContraption() == Contraption then continue end
+		-- Skip disabled baseplates here
 
 		if Countermeasures.ConeContainsPos(Position, Direction, Degrees, Entity:GetPos()) then
 			Result[Entity] = true
@@ -168,6 +86,7 @@ function ACF.GetEntitiesInSphere(Position, Radius, Contraption)
 	for Entity in pairs(GetAncestorEntities()) do
 		if not IsValid(Entity) then continue end
 		if Contraption and Entity:GetContraption() == Contraption then continue end
+		-- Skip disabled baseplates here
 
 		if Position:DistToSqr(Entity:GetPos()) <= RadiusSqr then
 			Result[Entity] = true
