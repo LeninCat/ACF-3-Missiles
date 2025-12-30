@@ -165,8 +165,8 @@ do	-- Overlay/networking
 
 		if RackClassData.BreechConfigs then
 			local BreechIndex = self:GetNW2Int("BreechIndex", 1)
-			local Caliber = MissileClassData.Caliber / 10 / ACF.InchToCm
-			local Depth = -MissileClassData.Length / ACF.InchToCm / 2
+			local Caliber = MissileClassData.Round.ActualWidth / 2
+			local Depth = -MissileClassData.Round.ActualLength / 2
 
 			for Index, Config in ipairs(RackClassData.BreechConfigs.Locations) do
 				local MountPos = self.MountPoints[1].Pos

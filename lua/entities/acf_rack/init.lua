@@ -108,7 +108,7 @@ do
 			local IdClass     = IdGroup.Lookup[IdName]
 
 			-- Check assuming 2 piece for now.
-			local ShellLength = IdClass.Length / ACF.InchToCm / 2
+			local ShellLength = IdClass.Round.ActualLength * 0.5
 			local p1 = self.BreechPos
 			local p2 = p1 - Vector(self.BreechDir * ShellLength, 0, 0)
 			local wp1, wp2 = self:LocalToWorld(p1), self:LocalToWorld(p2)
@@ -124,7 +124,7 @@ do
 			-- Additional Randomized check just in case
 			local tr2
 			if not tr.Hit then
-				local Width = IdClass.Caliber / 10 / ACF.InchToCm * 2
+				local Width = IdClass.Round.ActualWidth
 				local rb = Vector(0, Width, Width) / 2 * VectorRand()
 				local rp1 = p1 + rb
 				local rp2 = p2 + rb
