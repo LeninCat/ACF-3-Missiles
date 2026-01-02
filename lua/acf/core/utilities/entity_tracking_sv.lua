@@ -68,8 +68,10 @@ function ACF.GetEntitiesInCone(Position, Direction, Degrees, Contraption)
 
 	for Entity in pairs(GetAncestorEntities()) do
 		if not IsValid(Entity) then continue end
-		if Contraption and Entity:GetContraption() == Contraption then continue end
-		-- Skip disabled baseplates here
+		local EntityContraption = Entity:GetContraption()
+		if Contraption and EntityContraption == Contraption then continue end
+
+		if ACF.LegalChecks and Entity:GetClass() == "acf_baseplate" and Entity.Disabled then continue end
 
 		if Countermeasures.ConeContainsPos(Position, Direction, Degrees, Entity:GetPos()) then
 			Result[Entity] = true
