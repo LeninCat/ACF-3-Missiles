@@ -7,7 +7,8 @@ local Contraptions    = {}
 
 local function UpdateValues(Contraption)
 	local Entity = Contraption.ACF_Baseplate
-	if not ACF.LegalChecks and not IsValid(Entity) then Entity = next(Contraption.families).ancestor end -- If legal checks are disabled, use any ancestor
+	-- If legal checks are disabled, use any ancestor
+	if not ACF.LegalChecks and not IsValid(Entity) and Contraption and next(Contraption.families) and next(Contraption.families).ancestor then Entity = next(Contraption.families).ancestor end
 	if not IsValid(Entity) then return end
 
 	local PhysObj  = Entity:GetPhysicsObject()
