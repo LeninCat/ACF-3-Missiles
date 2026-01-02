@@ -1,21 +1,13 @@
 local ACF             = ACF
 local Clock           = ACF.Utilities.Clock
-local Contraption     = ACF.Contraption
 local Countermeasures = ACF.Classes.Countermeasures
 local NextUpdate      = 0
 local Ancestors       = {}
+local Contraptions    = {}
 
-local function GetAncestor(Entity)
-	local Ancestor = Contraption.GetAncestor(Entity)
-
-	if not IsValid(Ancestor) then return end
-	if Ancestor == Entity then return end
-	if Ancestor.DoNotTrack then return end
-
-	return Ancestor
-end
-
-local function UpdateValues(Entity)
+local function UpdateValues(Contraption)
+	local Entity = Contraption.ACF_Baseplate
+	if not ACF.LegalChecks and not IsValid(Entity) then Entity = next(Contraption.families).ancestor end -- If legal checks are disabled, use any ancestor
 	if not IsValid(Entity) then return end
 
 	local PhysObj  = Entity:GetPhysicsObject()
@@ -37,36 +29,27 @@ local function UpdateValues(Entity)
 
 	Entity.Position = Position
 	Entity.Velocity = Velocity
+	Contraption.Ancestor = Entity
 end
 
 -- Maintain ancestors array
-hook.Add("OnEntityCreated", "ACF Entity Tracking", function(Entity)
-	if not IsValid(Entity) then return end
-	if not Entity.IsACFBaseplate then return end
+hook.Add("cfw.contraption.created", "ACF Entity Tracking", function(Contraption)
+	Contraptions[Contraption] = true
+end)
 
-	Ancestors[Entity] = true
-
-	Entity:CallOnRemove("ACF Entity Tracking", function()
-		Ancestors[Entity] = nil
-		Entity.Position = nil
-		Entity.Velocity = nil
-	end)
+hook.Add("cfw.contraption.removed", "ACF Entity Tracking", function(Contraption)
+	Contraptions[Contraption] = nil
 end)
 
 hook.Add("ACF_OnTick", "ACF Entity Tracking", function()
-	for Ancestor in pairs(Ancestors) do
-		UpdateValues(Ancestor)
-	end
+	for Contraption in pairs(Contraptions) do UpdateValues(Contraption) end
 end)
-
-local function GetAncestorEntities()
-	return Ancestors
-end
 
 function ACF.GetEntitiesInCone(Position, Direction, Degrees, Contraption)
 	local Result = {}
 
-	for Entity in pairs(GetAncestorEntities()) do
+	for Con in pairs(Contraptions) do
+		local Entity = Con.Ancestor
 		if not IsValid(Entity) then continue end
 		local EntityContraption = Entity:GetContraption()
 		if Contraption and EntityContraption == Contraption then continue end
@@ -85,7 +68,8 @@ function ACF.GetEntitiesInSphere(Position, Radius, Contraption)
 	local Result = {}
 	local RadiusSqr = Radius * Radius
 
-	for Entity in pairs(GetAncestorEntities()) do
+	for Con in pairs(Contraptions) do
+		local Entity = Con.Ancestor
 		if not IsValid(Entity) then continue end
 		if Contraption and Entity:GetContraption() == Contraption then continue end
 		-- Skip disabled baseplates here
