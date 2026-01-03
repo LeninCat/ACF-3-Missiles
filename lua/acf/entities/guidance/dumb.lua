@@ -16,6 +16,10 @@ if CLIENT then
 else
 	local Countermeasures = ACF.Classes.Countermeasures
 
+	function Guidance:GetCost()
+		return 0
+	end
+
 	function Guidance:OnLaunched() end
 
 	function Guidance:PreGuidance(Missile)

@@ -7,6 +7,10 @@ else
 	local Countermeasures = ACF.Classes.Countermeasures
 	Guidance.RadarType = "AM-Radar"
 
+	function Guidance:GetCost()
+		return 1
+	end
+
 	function Guidance:GetRadar()
 		if not IsValid(self.Source) then return end
 

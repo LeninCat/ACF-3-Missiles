@@ -6,7 +6,6 @@ Racks.Register("1xRK", {
 	Model		= "models/missiles/rkx1.mdl",
 	Mass		= 79,
 	Year		= 1915,
-	MagSize		= 1,
 	Armor		= 10,
 	Preview = {
 		Height = 50,
@@ -26,7 +25,6 @@ Racks.Register("1xRK_small", {
 	Model		= "models/missiles/rkx1_sml.mdl",
 	Mass		= 31,
 	Year		= 1915,
-	MagSize		= 1,
 	Armor		= 10,
 	Preview = {
 		Height = 100,
@@ -46,7 +44,6 @@ Racks.Register("2xRK", {
 	Model		= "models/missiles/rack_double.mdl",
 	Mass		= 160,
 	Year		= 1915,
-	MagSize		= 2,
 	Armor		= 10,
 	Preview = {
 		FOV = 85,
@@ -67,7 +64,6 @@ Racks.Register("3xRK", {
 	Mass		= 61,
 	Year		= 1936,
 	Armor		= 10,
-	MagSize		= 3,
 	Preview = {
 		FOV = 75,
 	},
@@ -88,7 +84,6 @@ Racks.Register("4xRK", {
 	Mass		= 92,
 	Year		= 1936,
 	Armor		= 10,
-	MagSize		= 4,
 	Preview = {
 		FOV = 115,
 	},
@@ -109,7 +104,6 @@ Racks.Register("2x AGM-114", {
 	Model		= "models/missiles/agm_114_2xrk.mdl",
 	Mass		= 60,
 	Year		= 1984,
-	MagSize		= 2,
 	Armor		= 5,
 	Preview = {
 		Height = 90,
@@ -130,7 +124,6 @@ Racks.Register("4x AGM-114", {
 	Model		= "models/missiles/agm_114_4xrk.mdl",
 	Mass		= 162,
 	Year		= 1984,
-	MagSize		= 4,
 	Armor		= 5,
 	Preview = {
 		FOV = 100,
@@ -152,7 +145,6 @@ Racks.Register("1xAT3RK", {
 	Model		= "models/missiles/at3rk.mdl",
 	Mass		= 17,
 	Year		= 1969,
-	MagSize		= 1,
 	Armor		= 2.5,
 	Preview = {
 		FOV = 110,
@@ -169,7 +161,6 @@ Racks.Register("1xAT3RKS", {
 	Model		= "models/missiles/at3rs.mdl",
 	Mass		= 8,
 	Year		= 1972,
-	MagSize		= 1,
 	Armor		= 2.5,
 	Preview = {
 		FOV = 80,

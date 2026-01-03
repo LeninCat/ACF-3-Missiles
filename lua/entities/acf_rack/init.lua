@@ -241,6 +241,7 @@ do -- Spawning and Updating --------------------
 		Entity.Class          = Rack.ID
 		Entity.ClassData      = Rack
 		Entity.Caliber        = Rack.Caliber or 0
+		Entity.RackCaliber	  = Rack.Caliber or 0 -- Maybe this shouldn't even be defined, because Entity.Caliber just gets overwritten for shits and giggles
 		Entity.MagSize        = Rack.MagSize or 1
 		Entity.ForcedIndex    = Entity.ForcedIndex and math.max(Entity.ForcedIndex, Entity.MagSize)
 		Entity.PointIndex     = 1
@@ -1071,6 +1072,11 @@ do -- Misc -------------------------------------
 		if not IsValid(PhysObj) then return Entity:GetPos() end
 
 		return Entity:LocalToWorld(PhysObj:GetMassCenter())
+	end
+
+	function ENT:GetCost()
+		local selftbl = self:GetTable()
+		return selftbl.MagSize * 1.5 * math.max(1, math.max(70, selftbl.RackCaliber) / 70)
 	end
 
 	function ENT:Enable()

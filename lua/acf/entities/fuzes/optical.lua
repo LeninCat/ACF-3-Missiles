@@ -32,6 +32,10 @@ else
 
 	Entities.AddArguments("acf_ammo", "FuzeDistance") -- Adding extra info to ammo crates
 
+	function Fuze:GetCost()
+		return 1
+	end
+
 	function Fuze:VerifyData(EntClass, Data, ...)
 		Fuze.BaseClass.VerifyData(self, EntClass, Data, ...)
 

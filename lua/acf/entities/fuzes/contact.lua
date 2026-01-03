@@ -42,6 +42,10 @@ else
 
 	Entities.AddArguments("acf_ammo", "ArmingDelay") -- Adding extra info to ammo crates
 
+	function Fuze:GetCost()
+		return 0
+	end
+
 	function Fuze:VerifyData(_, Data)
 		local Delay = Data.ArmingDelay
 		local Args = Data.FuzeArgs

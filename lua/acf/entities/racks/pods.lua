@@ -8,7 +8,6 @@ Racks.Register("40mm7xPOD", {
 	Caliber		= 40,
 	Mass		= 10,
 	Year		= 1940,
-	MagSize		= 7,
 	Armor		= 5,
 	Preview = {
 		FOV = 77,
@@ -35,7 +34,6 @@ Racks.Register("57mm16xPOD", {
 	Caliber		= 57,
 	Mass		= 30,
 	Year		= 1956,
-	MagSize		= 16,
 	Armor		= 5,
 	Spread		= 1.37,
 	Preview = {
@@ -72,7 +70,6 @@ Racks.Register("57mm32xPOD", {
 	Caliber		= 57,
 	Mass		= 130,
 	Year		= 1956,
-	MagSize		= 32,
 	Armor		= 5,
 	Spread		= 1.37,
 	Preview = {
@@ -125,7 +122,6 @@ Racks.Register("70mm7xPOD", {
 	Caliber		= 70,
 	Mass		= 30,
 	Year		= 1940,
-	MagSize		= 7,
 	Armor		= 5,
 	Spread		= 0.6,
 	Preview = {
@@ -153,7 +149,6 @@ Racks.Register("70mm19xPOD", {
 	Caliber		= 70,
 	Mass		= 90,
 	Year		= 1960,
-	MagSize		= 19,
 	Armor		= 5,
 	Spread		= 0.6,
 	Preview = {
@@ -193,7 +188,6 @@ Racks.Register("80mm20xPOD", {
 	Caliber		= 80,
 	Mass		= 120,
 	Year		= 1970,
-	MagSize		= 20,
 	Armor		= 5,
 	Spread		= 1.3,
 	Preview = {
@@ -234,7 +228,6 @@ Racks.Register("1x BGM-71E", {
 	Caliber		= 152,
 	Mass		= 11,
 	Year		= 1970,
-	MagSize		= 1,
 	Armor		= 2.5,
 	Preview = {
 		Height = 110,
@@ -257,7 +250,6 @@ Racks.Register("2x BGM-71E", {
 	Caliber		= 152,
 	Mass		= 32,
 	Year		= 1970,
-	MagSize		= 2,
 	Armor		= 2.5,
 	Preview = {
 		Height = 95,
@@ -281,7 +273,6 @@ Racks.Register("4x BGM-71E", {
 	Caliber		= 152,
 	Mass		= 65,
 	Year		= 1970,
-	MagSize		= 4,
 	Armor		= 2.5,
 	Preview = {
 		FOV = 85,
@@ -306,7 +297,6 @@ Racks.Register("380mmRW61", {
 	Caliber		= 380,
 	Mass		= 429,
 	Year		= 1945,
-	MagSize		= 1,
 	Armor		= 25,
 	Spread		= 0.01,
 
@@ -325,7 +315,6 @@ Racks.Register("3xUARRK", {
 	Mass		= 61,
 	Year		= 1941,
 	Armor		= 5,
-	MagSize		= 3,
 	Spread		= 0.04,
 	Preview = {
 		Height = 115,
@@ -350,7 +339,6 @@ Racks.Register("6xUARRK", {
 	Mass		= 213,
 	Year		= 1980,
 	Armor		= 5,
-	MagSize		= 6,
 	Spread		= 0.04,
 	Preview = {
 		FOV = 60,
@@ -376,7 +364,6 @@ Racks.Register("1x FIM-92", {
 	Caliber		= 70,
 	Mass		= 11,
 	Year		= 1984,
-	MagSize		= 1,
 	Armor		= 2.5,
 	Preview = {
 		Height = 70,
@@ -398,7 +385,6 @@ Racks.Register("2x FIM-92", {
 	Caliber		= 70,
 	Mass		= 16,
 	Year		= 1984,
-	MagSize		= 2,
 	Armor		= 16,
 	Preview = {
 		Height = 90,
@@ -421,7 +407,6 @@ Racks.Register("4x FIM-92", {
 	Caliber		= 70,
 	Mass		= 42,
 	Year		= 1984,
-	MagSize		= 4,
 	Armor		= 5,
 	Preview = {
 		FOV = 65,
@@ -445,7 +430,6 @@ Racks.Register("1x Strela-1", {
 	Caliber		= 120,
 	Mass		= 75,
 	Year		= 1968,
-	MagSize		= 1,
 	Armor		= 5,
 	Preview = {
 		FOV = 60,
@@ -466,7 +450,6 @@ Racks.Register("2x Strela-1", {
 	Caliber		= 120,
 	Mass		= 177,
 	Year		= 1968,
-	MagSize		= 2,
 	Armor		= 5,
 	Preview = {
 		FOV = 65,
@@ -488,7 +471,6 @@ Racks.Register("4x Strela-1", {
 	Caliber		= 120,
 	Mass		= 482,
 	Year		= 1968,
-	MagSize		= 4,
 	Armor		= 5,
 	Preview = {
 		FOV = 60,
@@ -513,7 +495,6 @@ Racks.Register("1x Ataka", {
 	Caliber		= 130,
 	Mass		= 13,
 	Year		= 1968,
-	MagSize		= 1,
 	Armor		= 2.5,
 	Preview = {
 		Height = 60,
@@ -536,7 +517,6 @@ Racks.Register("1x SPG9", {
 	Caliber		= 73,
 	Mass		= 26,
 	Year		= 1968,
-	MagSize		= 1,
 	Armor		= 5,
 	Spread		= 0.03,
 	Preview = {
@@ -560,7 +540,6 @@ Racks.Register("1x Kornet", {
 	Caliber		= 152,
 	Mass		= 16,
 	Year		= 1994,
-	MagSize		= 1,
 	Armor		= 2.5,
 	Preview = {
 		FOV = 60,
@@ -582,7 +561,6 @@ Racks.Register("127mm4xPOD", {
 	Caliber		= 127,
 	Mass		= 68,
 	Year		= 1957,
-	MagSize		= 4,
 	Armor		= 5,
 	Spread		= 0.02,
 	Preview = {

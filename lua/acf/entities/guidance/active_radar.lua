@@ -5,6 +5,10 @@ local Guidance  = Guidances.Register("Active Radar", "Semi-Active Radar")
 if CLIENT then
 	Guidance.Description = "This guidance package uses a radar to detect contraptions and guides the munition towards the most centered one it can find."
 else
+	function Guidance:GetCost()
+		return 3
+	end
+
 	function Guidance:SeekTarget(Missile)
 		local Position   = Missile.Position
 		local Targets    = ACF.GetEntitiesInCone(Position, Missile:GetForward(), self.SeekCone)
