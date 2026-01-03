@@ -11,6 +11,10 @@ else
 	local TraceData = { start = true, endpos = true, mask = MASK_SOLID_BRUSHONLY }
 	local Trace     = ACF.trace
 
+	function Guidance:GetCost()
+		return 3
+	end
+
 	function Guidance:OnLaunched(Missile)
 		self.InPos = Missile.MountPoint.Position
 		self.OutPos = Missile.ExhaustPos

@@ -6,6 +6,10 @@ if CLIENT then
 else
 	Guidance.RadarType = "TGT-Radar"
 
+	function Guidance:GetCost()
+		return 2
+	end
+
 	-- Semi-actives can't seek targets by themselves
 	function Guidance:SeekTarget()
 		self.Target  = nil

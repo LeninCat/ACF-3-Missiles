@@ -1,8 +1,6 @@
 local ACF             = ACF
 local Clock           = ACF.Utilities.Clock
 local Countermeasures = ACF.Classes.Countermeasures
-local NextUpdate      = 0
-local Ancestors       = {}
 local Contraptions    = {}
 
 local function UpdateValues(Contraption)

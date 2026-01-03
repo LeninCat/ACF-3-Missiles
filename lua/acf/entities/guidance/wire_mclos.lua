@@ -20,6 +20,10 @@ else
 
 	Guidance.IsWire = true
 
+	function Guidance:GetCost()
+		return 3
+	end
+
 	function Guidance:OnLaunched(Missile)
 		Guidance.BaseClass.OnLaunched(self, Missile)
 

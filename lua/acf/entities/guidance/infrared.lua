@@ -5,6 +5,10 @@ local Guidance  = Guidances.Register("Infrared", "Anti-radiation")
 if CLIENT then
 	Guidance.Description = "This guidance package will detect a contraption in front of itself and guide the munition towards it."
 else
+	function Guidance:GetCost()
+		return 2
+	end
+
 	function Guidance:UpdateTarget(Missile)
 		local Position   = Missile.Position
 		local Targets    = ACF.GetEntitiesInCone(Position, Missile:GetForward(), self.SeekCone)

@@ -6,6 +6,10 @@ local Fuze    = Fuzes.Register("Altitude", "Contact")
 if CLIENT then
 	Fuze.Description = "This fuze tracks the guidance module's target and detonates once it crosses the altitude of the target position."
 else
+	function Fuze:GetCost()
+		return 0.1
+	end
+
 	function Fuze:GetDetonate(Missile, Guidance)
 		if not self:IsArmed() then return false end
 
