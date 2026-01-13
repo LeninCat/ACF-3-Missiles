@@ -8,6 +8,11 @@ Weapons.Register("FGL", {
 	MuzzleFlash = "gl_muzzleflash_noscale",
 	ROFMod      = 0.6,
 	Spread      = 1.5,
+	Caliber	= {
+		Base = 40,
+		Min  = 40,
+		Max  = 40,
+	},
 	Sound       = "acf_missiles/missiles/flare_launch.mp3",
 	Cleanup     = "acf_flarelauncher",
 	Blacklist   = { "AP", "APHE", "FL", "HE", "HEAT", "HP", "SM" },
