@@ -63,6 +63,7 @@ local function CreateMenu(Menu)
 	local MissileList = Menu:AddComboBox()
 
 	local MissileBase = Menu:AddCollapsible("Missile Information")
+	local MissileTitle = MissileBase:AddTitle()
 	local MissileClass = MissileBase:AddLabel()
 	local MissileDesc = MissileBase:AddLabel()
 	local MissilePreview = MissileBase:AddModelPreview(nil, true)
@@ -73,8 +74,9 @@ local function CreateMenu(Menu)
 	local RackList = Menu:AddComboBox()
 
 	local RackBase = Menu:AddCollapsible("Rack Information")
+	local RackTitle = RackBase:AddTitle()
 	local RackDesc = RackBase:AddLabel()
-	local RackPreview = RackBase:AddModelPreview(nil, true)
+	local RackPreview = RackBase:AddModelPreview(nil, true, "Primary")
 	local RackInfo = RackBase:AddLabel()
 
 	local BreechIndex = RackBase:AddComboBox()
@@ -112,6 +114,7 @@ local function CreateMenu(Menu)
 
 		ACF.LoadSortedList(RackList, GetRackList(Data), "MagSize", "Model")
 
+		MissileTitle:SetText(Data.Name)
 		MissileDesc:SetText(Data.Description)
 
 		MissilePreview:UpdateModel(Data.Model)
@@ -132,6 +135,7 @@ local function CreateMenu(Menu)
 
 		ACF.SetClientData("Rack", Data.ID)
 
+		RackTitle:SetText(Data.Name)
 		RackDesc:SetText(Data.Description)
 		RackInfo:SetText(GetRackText(Data))
 
