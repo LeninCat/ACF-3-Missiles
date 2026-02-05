@@ -26,6 +26,10 @@ function Racks.Register(ID, Data)
 		}
 	end
 
+	if Data.MountPoints then
+		Class.MagSize = table.Count(Data.MountPoints)
+	end
+
 	Classes.AddSboxLimit(Class.LimitConVar)
 
 	return Class

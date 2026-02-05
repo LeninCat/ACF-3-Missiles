@@ -20,6 +20,10 @@ else
 	local Trace     = ACF.trace
 	local Lasers    = ACF.ActiveLasers
 
+	function Guidance:GetCost()
+		return 3
+	end
+
 	function Guidance.GetDirectionDot(Missile, TargetPos)
 		local Position = Missile.Position
 		local Forward = Missile:GetForward()

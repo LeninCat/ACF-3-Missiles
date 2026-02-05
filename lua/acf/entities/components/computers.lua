@@ -835,6 +835,15 @@ function ACF.CreateGroundLoaderMenu(Data, Menu)
 	Menu:AddLabel(GroundLoaderText:format(Data.Mass))
 
 	ACF.SetClientData("PrimaryClass", "acf_groundloader")
+
+	if Menu.ComponentPreview then
+		local Settings = {
+			GhostAngOffset = Angle(0, -90, 0)
+		}
+
+		Menu.ComponentPreview:UpdateSettings(Settings)
+		Menu.ComponentPreview:SetModelScale(1, true)
+	end
 end
 
 -- Wow I love this file so much

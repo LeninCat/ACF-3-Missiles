@@ -502,6 +502,23 @@ function ENT:ACF_OnRepaired() -- OldArmor, OldHealth, Armor, Health
 	self.Damage = (1 - math.Round(self.ACF.Health / self.ACF.MaxHealth, 2))
 end
 
+function ENT:GetCost()
+	local selftbl	= self:GetTable()
+
+	local Scalar = 1
+	local Cost = 0
+
+	if selftbl.ClassType == "AM-Radar" then Scalar = 0.5 end
+
+	if selftbl.Range then	-- 
+		Cost = 10 * (selftbl.Range / 4096)
+	else -- ConeDegs
+		Cost = selftbl.ConeDegs
+	end
+
+	return Cost * Scalar
+end
+
 function ENT:Enable()
 	if not ACF.CheckLegal(self) then return end
 

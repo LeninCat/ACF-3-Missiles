@@ -6,6 +6,10 @@ if CLIENT then
 else
 	local ZERO = Vector()
 
+	function Guidance:GetCost()
+		return 3
+	end
+
 	function Guidance:CheckComputer()
 		local Computer = self:GetComputer()
 

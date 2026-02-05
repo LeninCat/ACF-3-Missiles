@@ -91,10 +91,15 @@ do
 
 	function ENT:UpdateLoadMod()
 		self.CrewsByType = self.CrewsByType or {}
-		local Sum1 = ACF.WeightedLinkSum(self.CrewsByType.Loader or {}, GetReloadEff, self, self.CurrentCrate or self)
-		local Sum2 = ACF.WeightedLinkSum(self.CrewsByType.Commander or {}, GetReloadEff, self, self.CurrentCrate or self)
-		local Sum3 = ACF.WeightedLinkSum(self.CrewsByType.Pilot or {}, GetReloadEff, self, self.CurrentCrate or self)
-		self.LoadCrewMod = self.LoadCrewModOverride or math.Clamp(Sum1 + Sum2 + Sum3, ACF.CrewFallbackCoef, ACF.LoaderMaxBonus)
+		if IsValid(self.Autoloader) and self.Autoloader.ACF.Health > 0 then
+			local Sum1 = self.Autoloader:GetReloadEffAuto(self, self.CurrentCrate)
+			self.LoadCrewMod = self.LoadCrewModOverride or math.Clamp(Sum1, ACF.AutoloaderFallbackCoef, ACF.AutoloaderMaxBonus)
+		else
+			local Sum1 = ACF.WeightedLinkSum(self.CrewsByType.Loader or {}, GetReloadEff, self, self.CurrentCrate or self)
+			local Sum2 = ACF.WeightedLinkSum(self.CrewsByType.Commander or {}, GetReloadEff, self, self.CurrentCrate or self)
+			local Sum3 = ACF.WeightedLinkSum(self.CrewsByType.Pilot or {}, GetReloadEff, self, self.CurrentCrate or self)
+			self.LoadCrewMod = self.LoadCrewModOverride or math.Clamp(Sum1 + Sum2 + Sum3, ACF.CrewFallbackCoef, ACF.LoaderMaxBonus)
+		end
 
 		-- Check space behind breech
 		if ACF.LegalChecks and self.BulletData and self.BulletData.Type ~= "Empty" and self.ClassData.BreechConfigs then
@@ -103,14 +108,14 @@ do
 			local IdClass     = IdGroup.Lookup[IdName]
 
 			-- Check assuming 2 piece for now.
-			local ShellLength = IdClass.Length / ACF.InchToCm / 2
+			local ShellLength = IdClass.Round.ActualLength * 0.5
 			local p1 = self.BreechPos
 			local p2 = p1 - Vector(self.BreechDir * ShellLength, 0, 0)
 			local wp1, wp2 = self:LocalToWorld(p1), self:LocalToWorld(p2)
 
 			TraceConfig.start = wp1
 			TraceConfig.endpos = wp2
-			TraceConfig.filter = function(x) return not (x == self or x.noradius or x:GetOwner() ~= self:GetOwner() or x:IsPlayer() or x:GetClass() == "acf_missile" or ACF.GlobalFilter[x:GetClass()]) end
+			TraceConfig.filter = function(x) return not (x == self or x.noradius or x.IsACFAutoloader or x:GetOwner() ~= self:GetOwner() or x:IsPlayer() or x:GetClass() == "acf_missile" or ACF.GlobalFilter[x:GetClass()]) end
 			local tr = TraceLine(TraceConfig)
 
 			debugoverlay.Line(wp1, tr.HitPos, 1, Green, true)
@@ -119,7 +124,7 @@ do
 			-- Additional Randomized check just in case
 			local tr2
 			if not tr.Hit then
-				local Width = IdClass.Caliber / 10 / ACF.InchToCm * 2
+				local Width = IdClass.Round.ActualWidth
 				local rb = Vector(0, Width, Width) / 2 * VectorRand()
 				local rp1 = p1 + rb
 				local rp2 = p2 + rb
@@ -236,6 +241,7 @@ do -- Spawning and Updating --------------------
 		Entity.Class          = Rack.ID
 		Entity.ClassData      = Rack
 		Entity.Caliber        = Rack.Caliber or 0
+		Entity.RackCaliber	  = Rack.Caliber or 0 -- Maybe this shouldn't even be defined, because Entity.Caliber just gets overwritten for shits and giggles
 		Entity.MagSize        = Rack.MagSize or 1
 		Entity.ForcedIndex    = Entity.ForcedIndex and math.max(Entity.ForcedIndex, Entity.MagSize)
 		Entity.PointIndex     = 1
@@ -1066,6 +1072,11 @@ do -- Misc -------------------------------------
 		if not IsValid(PhysObj) then return Entity:GetPos() end
 
 		return Entity:LocalToWorld(PhysObj:GetMassCenter())
+	end
+
+	function ENT:GetCost()
+		local selftbl = self:GetTable()
+		return selftbl.MagSize * 1.5 * math.max(1, math.max(70, selftbl.RackCaliber) / 70)
 	end
 
 	function ENT:Enable()
